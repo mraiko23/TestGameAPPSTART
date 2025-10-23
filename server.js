@@ -5,6 +5,8 @@ import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// Bind host explicitly so platforms like Render can detect the open port
+const HOST = process.env.HOST || '0.0.0.0';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,8 +31,8 @@ if (fs.existsSync(distPath)) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server started on ${HOST}:${PORT}`);
 });
 
 process.on('uncaughtException', (err) => {
